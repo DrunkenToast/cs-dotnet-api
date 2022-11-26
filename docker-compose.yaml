@@ -1,0 +1,24 @@
+version: '2'
+services:
+  api:
+    build: .
+    container_name: "cs_api"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "80:80"
+  mysql:
+    container_name: "cs_api_db"
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    env_file:
+      - db.env
+    healthcheck:
+      test:  [
+          "CMD", "mysqladmin" ,"ping", "-h", "localhost",
+          '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD'
+      ]
+      timeout: 3s
+      retries: 20
