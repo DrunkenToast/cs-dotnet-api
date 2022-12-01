@@ -11,14 +11,12 @@ namespace cs_dotnet_api.Models
     {
         public int? Id {get; set;}
 
-        [ForeignKey("ItemName")]
-        public int ItemNameId {get; set;}
         public ItemName ItemName {get; set;}
 
         public QualityType Quality {get; set;}
         public override string ToString()
         {
-            return $"{Id}: {ItemNameId} {ItemName.Name} {ItemName.ItemNameId} {Quality}";
+            return $"{Id}: {ItemName.Name} {ItemName.ItemNameId} {Quality}";
         }
     }
 }

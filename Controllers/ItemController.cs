@@ -34,20 +34,14 @@ namespace cs_dotnet_api.Controllers
         public ActionResult GetItemById(int id)
         {
             var item = _repo.GetItemById(id);
-            System.Console.WriteLine(item.ToString());
             if (item != null)
             {
-                ItemReadDto it = new ItemReadDto() {
-                    Id = id,
-                    Name = item.ItemName.Name,
-                    Quality = item.Quality,
-                };
-                return Ok(it);
+                return Ok(_map.Map<ItemReadDto>(item));
             }
             return NotFound();
         }
 
-        [HttpPost] // TODO: Change behaviour to random creation
+        [HttpPost]
         public ActionResult AddRandomItem()
         {
             int num = _rnd.Next(100);
