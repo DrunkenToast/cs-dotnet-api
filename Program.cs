@@ -3,7 +3,7 @@ using cs_dotnet_api.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-String _connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
+String? _connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
 System.Console.WriteLine(_connectionString);
 if (_connectionString == null) {
     throw new ArgumentException("No connection string");
