@@ -12,5 +12,7 @@ namespace cs_dotnet_api.Repositories
         Item? GetItemById(int id);
         void AddItem(Item it);
         void RemoveItem(Item it);
+
+        ItemName GetRandomItemName();
     }
 }

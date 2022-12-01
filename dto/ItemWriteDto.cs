@@ -10,7 +10,7 @@ namespace cs_dotnet_api.dto
     {
         
         // public int Id {get; set;}
-        public String Name {get; set;}
-        public QualityType Quality {get; set;}
+        // public String Name {get; set;}
+        // public QualityType Quality {get; set;}
     }
 }

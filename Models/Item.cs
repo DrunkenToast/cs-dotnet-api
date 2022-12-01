@@ -1,34 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using cs_dotnet_api.Repositories;
 
 namespace cs_dotnet_api.Models
 {
     public class Item
     {
         public int? Id {get; set;}
-        public String Name {get; set;}
+
+        [ForeignKey("ItemName")]
+        public int ItemNameId {get; set;}
+        public ItemName ItemName {get; set;}
+
         public QualityType Quality {get; set;}
-
-        static Item CreateRandom() {
-            Random rnd = new Random();
-
-            int num = rnd.Next(100);
-
-            QualityType q = num switch {
-                < 1 => QualityType.Community,
-                < 2 => QualityType.Unusual,
-                < 7 => QualityType.Genuine,
-                < 25 => QualityType.Strange,
-                < 40 => QualityType.Vintage,
-                _ => QualityType.Unique,
-            };
-
-            return new Item(){
-                Name = "test", // TODO: random name
-                Quality = q,
-            };
+        public override string ToString()
+        {
+            return $"{Id}: {ItemNameId} {ItemName.Name} {ItemName.ItemNameId} {Quality}";
         }
     }
 }

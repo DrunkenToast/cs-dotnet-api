@@ -32,6 +32,11 @@ namespace cs_dotnet_api.Repositories
             return _context.Items.FirstOrDefault(it => it.Id == id);
         }
 
+        public ItemName GetRandomItemName()
+        {
+            return _context.ItemNames.OrderBy(c => Guid.NewGuid()).Take(1).ToList()[0];
+        }
+
         public void RemoveItem(Item it)
         {
             _context.Items.Remove(it);

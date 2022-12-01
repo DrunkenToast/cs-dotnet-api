@@ -12,8 +12,12 @@ namespace cs_dotnet_api.Mappings
     {
         public ItemProfile()
         {
-            CreateMap<Item, ItemReadDto>();
-            CreateMap<ItemWriteDto, Item>();
+            CreateMap<Item, ItemReadDto>()
+                .ForMember(
+                    dest => dest.Name,
+                    opt => opt.MapFrom(src => src.ItemName.Name)
+                );
+            CreateMap<ItemWriteDto, Item>(); // TODO
         }
     }
 }
