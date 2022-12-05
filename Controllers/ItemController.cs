@@ -62,7 +62,11 @@ namespace cs_dotnet_api.Controllers
             };
 
             _repo.AddItem(it);
-            return CreatedAtRoute(nameof(GetItemById), new {Id = it.Id}, it);
+            return CreatedAtRoute(
+                nameof(GetItemById),
+                new {Id = it.Id},
+                _map.Map<ItemReadDto>(it)
+            );
         }
 
         [HttpDelete("{id}")]
