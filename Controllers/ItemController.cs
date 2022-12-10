@@ -16,6 +16,7 @@ namespace cs_dotnet_api.Controllers
     {
         private readonly IRepo _repo;
         private readonly IMapper _map;
+        private readonly Random _rnd = new Random();
 
         public ItemController(IRepo repo, IMapper map)
         {
@@ -40,12 +41,32 @@ namespace cs_dotnet_api.Controllers
             return NotFound();
         }
 
-        [HttpPost] // TODO: Change behaviour to random creation
-        public ActionResult AddItem(ItemWriteDto it)
+        [HttpPost]
+        public ActionResult AddRandomItem()
         {
-            var It = _map.Map<Item>(it);
-            _repo.AddItem(It);
-            return CreatedAtRoute(nameof(GetItemById), new {Id = It.Id}, It);
+            int num = _rnd.Next(100);
+            System.Console.WriteLine(num);
+
+            QualityType q = num switch {
+                < 1 => QualityType.Community,
+                < 2 => QualityType.Unusual,
+                < 7 => QualityType.Genuine,
+                < 25 => QualityType.Strange,
+                < 40 => QualityType.Vintage,
+                _ => QualityType.Unique,
+            };
+
+            var it = new Item(){
+                ItemName = _repo.GetRandomItemName(),
+                Quality = q,
+            };
+
+            _repo.AddItem(it);
+            return CreatedAtRoute(
+                nameof(GetItemById),
+                new {Id = it.Id},
+                _map.Map<ItemReadDto>(it)
+            );
         }
 
         [HttpDelete("{id}")]
