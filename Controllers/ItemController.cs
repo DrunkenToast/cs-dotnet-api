@@ -42,10 +42,20 @@ namespace cs_dotnet_api.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddRandomItem()
+        public ActionResult UnboxRandomItem()
         {
+            // First detuct key
+            var keys = _repo.GetKeys();
+
+            if (keys.Amount < 1) {
+                return StatusCode(StatusCodes.Status403Forbidden, "Reason: You do not own a key to unbox a crate.");
+            }
+
+            keys.Amount--;
+            _repo.UpdateKeys(keys);
+
+            // Create item
             int num = _rnd.Next(100);
-            System.Console.WriteLine(num);
 
             QualityType q = num switch {
                 < 1 => QualityType.Community,

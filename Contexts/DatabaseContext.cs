@@ -7,12 +7,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace cs_dotnet_api.Contexts
 {
-    public class ItemContext : DbContext
+    public class DatabaseContext : DbContext
     {
         public DbSet<Item> Items {get; set;}
         public DbSet<ItemName> ItemNames {get; set;}
+        public DbSet<Keys> Keys {get; set;}
 
-        public ItemContext(DbContextOptions<ItemContext> opt) : base(opt) {
+        public DatabaseContext(DbContextOptions<DatabaseContext> opt) : base(opt) {
         }
 
         #region Required
@@ -28,6 +29,13 @@ namespace cs_dotnet_api.Contexts
             }
             
             modelBuilder.Entity<ItemName>().HasData(itemNames);
+
+            // Start out with 5 keys
+            modelBuilder.Entity<Keys>().HasData(
+                new List<Keys>() {
+                    new Keys() {Id=1, Amount=5}
+                }
+            );
         }
         #endregion
 

@@ -26,6 +26,8 @@ namespace cs_dotnet_api.Repositories
             },
         };
 
+        Keys _keys = new Keys() {Id=1, Amount=5};
+
         public void AddItem(Item it)
         {
             itemList.Add(it);
@@ -52,6 +54,16 @@ namespace cs_dotnet_api.Repositories
         public void RemoveItem(Item it)
         {
             itemList.Remove(it);
+        }
+
+        public Keys GetKeys()
+        {
+            return _keys;
+        }
+
+        public void UpdateKeys(Keys keys)
+        {
+            _keys = keys;
         }
     }
 }

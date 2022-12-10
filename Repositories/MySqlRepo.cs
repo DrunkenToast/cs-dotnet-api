@@ -10,10 +10,10 @@ namespace cs_dotnet_api.Repositories
 {
     public class MySqlRepo : IRepo
     {
-        private readonly ItemContext _context;
+        private readonly DatabaseContext _context;
         private readonly Random _rnd = new();
 
-        public MySqlRepo(ItemContext context) {
+        public MySqlRepo(DatabaseContext context) {
             _context = context;
         }
 
@@ -42,6 +42,20 @@ namespace cs_dotnet_api.Repositories
         public void RemoveItem(Item it)
         {
             _context.Items.Remove(it);
+            _save();
+        }
+
+        public Keys GetKeys()
+        {
+            var keys = _context.Keys.FirstOrDefault();
+            if (keys == null) {keys = new Keys(){Id=1, Amount=0};}
+            return keys;
+        }
+
+        public void UpdateKeys(Keys keys)
+        {
+            var entry = _context.Keys.First(k => k.Id == keys.Id);
+            entry = keys; // TODO: check if this updates
             _save();
         }
 

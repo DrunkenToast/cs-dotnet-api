@@ -17,7 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IRepo, MySqlRepo>();
-builder.Services.AddDbContext<ItemContext>(opt => opt.UseMySql(_connectionString, ServerVersion.AutoDetect(_connectionString)));
+builder.Services.AddDbContext<DatabaseContext>(opt => opt.UseMySql(_connectionString, ServerVersion.AutoDetect(_connectionString)));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
