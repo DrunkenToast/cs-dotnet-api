@@ -11,12 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace cs_dotnet_api.Controllers
 {
     [ApiController]
-    // [Route("keys")]
     public class KeyController : ControllerBase
     {
         private readonly IRepo _repo;
         private readonly IMapper _map;
-        private readonly Random _rnd = new Random();
 
         public KeyController(IRepo repo, IMapper map)
         {
@@ -25,26 +23,30 @@ namespace cs_dotnet_api.Controllers
         }
 
         [HttpGet]
-        [Route("keys")]
+        [Route("keys", Name="GetKeys")]
         public ActionResult GetKeys()
         {
             return Ok(_map.Map<KeysReadDto>(_repo.GetKeys()));
         }
 
-        // [HttpGet("{id}", Name="GetItemById")]
-        // public ActionResult GetItemById(int id)
-        // {
-
-        // }
-
         [HttpPost]
         [Route("purchase")]
-        public ActionResult PurchaseKeys()
+        public ActionResult PurchaseKeys(PurchaseWriteDto purchaseWriteDto)
         {
+            if (purchaseWriteDto.Amount < 0)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, "Has to be a postive amount of keys");
+            }
+
             var keys = _repo.GetKeys();
-            keys.Amount += 1;
+
+            keys.Amount += purchaseWriteDto.Amount;
             _repo.UpdateKeys(keys);
-            return Ok();
+
+            // We do not create a resource, instead we update one and let the user now its Ok
+            return Ok(
+                _map.Map<KeysReadDto>(keys)
+            );
         }
     }
 }
