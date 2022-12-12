@@ -14,5 +14,8 @@ namespace cs_dotnet_api.Repositories
         void RemoveItem(Item it);
 
         ItemName GetRandomItemName();
+
+        Keys GetKeys();
+        void UpdateKeys(Keys keys);
     }
 }

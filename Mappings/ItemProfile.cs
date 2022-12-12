@@ -8,9 +8,9 @@ using cs_dotnet_api.Models;
 
 namespace cs_dotnet_api.Mappings
 {
-    public class ItemProfile : Profile
+    public class ProjectProfile : Profile
     {
-        public ItemProfile()
+        public ProjectProfile()
         {
             CreateMap<Item, ItemReadDto>()
                 .ForMember(
@@ -18,6 +18,8 @@ namespace cs_dotnet_api.Mappings
                     opt => opt.MapFrom(src => src.ItemName.Name)
                 );
             CreateMap<ItemWriteDto, Item>(); // TODO
+            CreateMap<Keys, KeysReadDto>()
+            .ForMember(dto => dto.Amount, opt => opt.MapFrom(keys => keys.Amount));
         }
     }
 }
