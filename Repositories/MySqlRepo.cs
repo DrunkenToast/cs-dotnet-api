@@ -55,7 +55,7 @@ namespace cs_dotnet_api.Repositories
         public void UpdateKeys(Keys keys)
         {
             var entry = _context.Keys.First(k => k.Id == keys.Id);
-            entry = keys; // TODO: check if this updates
+            entry = keys;
             _save();
         }
 
