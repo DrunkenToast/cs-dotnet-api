@@ -17,7 +17,7 @@ namespace cs_dotnet_api.Mappings
                     dest => dest.Name,
                     opt => opt.MapFrom(src => src.ItemName.Name)
                 );
-            CreateMap<ItemWriteDto, Item>(); // TODO
+            CreateMap<ItemWriteDto, Item>();
             CreateMap<Keys, KeysReadDto>()
             .ForMember(dto => dto.Amount, opt => opt.MapFrom(keys => keys.Amount));
         }
